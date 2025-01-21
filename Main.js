@@ -1,63 +1,25 @@
+import * as THREE from 'three';
 
-// Scene, Camera, Renderer
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setAnimationLoop( animate );
+document.body.appendChild( renderer.domElement );
+
+const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+
 camera.position.z = 5;
 
-const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threeCanvas'), antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-
-// Add Light
-const light = new THREE.PointLight(0xffffff, 100, 100);
-light.position.set(10, 10, 10);
-scene.add(light);
-
-const ambientLight = new THREE.AmbientLight(0x404040); // Soft light
-scene.add(ambientLight);
-
-// Load 3D Model (Headset)
-const loader = new THREE.GLTFLoader();
-let headset;
-
-loader.load(
-  'W:/Github/3D-Apple-Airpod-Max\Apple_head.glb', // Replace with the path to your 3D model
-  (gltf) => {
-    headset = gltf.scene;
-    scene.add(headset);
-  },
-  (xhr) => {
-    console.log(`Model ${xhr.loaded / xhr.total * 100}% loaded.`);
-    console.log("dev")
-  },
-  (error) => {
-    console.error('An error occurred while loading the model:', error);
-  }
-);
-
-// Handle Scroll
-let scrollPosition = 0;
-window.addEventListener('scroll', () => {
-  scrollPosition = window.scrollY;
-});
-
-// Animation Loop
 function animate() {
-  requestAnimationFrame(animate);
 
-  if (headset) {
-    headset.rotation.y += 0.01; // Continuous rotation
-    headset.position.y = -scrollPosition * 0.01; // Move up/down with scroll
-    headset.rotation.x = scrollPosition * 0.001; // Rotate with scroll
-  }
+	cube.rotation.x += 0.01;
+	cube.rotation.y += 0.01;
 
-  renderer.render(scene, camera);
+	renderer.render( scene, camera );
+
 }
-animate();
-
-// Resize Event
-window.addEventListener('resize', () => {
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-});
