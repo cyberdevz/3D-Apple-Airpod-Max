@@ -12,16 +12,16 @@ camera.position.z = 13;
 
 const scene = new THREE.Scene();
 let bee;
-let mixer;
+// let mixer;
 const loader = new GLTFLoader();
-loader.load('/demon_bee_full_texture.glb',
+loader.load('/Apple_head.glb',
     function (gltf) {
         bee = gltf.scene;
         scene.add(bee);
 
-        mixer = new THREE.AnimationMixer(bee);
-        mixer.clipAction(gltf.animations[0]).play();
-        modelMove();
+        // mixer = new THREE.AnimationMixer(bee);
+        // mixer.clipAction(gltf.animations[0]).play();
+        // modelMove();
     },
     function (xhr) {},
     function (error) {}

@@ -3,17 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D Headset Viewer</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.skypack.dev/three@0.129.0/build/three.min.js"></script>
-  <script src="https://cdn.skypack.dev/three@0.129.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://cdn.skypack.dev/three@0.129.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@<version>/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@<version>/examples/jsm/"
+      }
+    }
+  </script>
 </head>
 <body>
-    <div class="heading"> <p> 3D Web </p></div>
-  <div class="canvas-container">
-    <canvas id="threeCanvas"></canvas>
+  <div class="center-text">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
+    3D Web
   </div>
-  <script type='modeule' src="app.js"></script>
+  <div class="container">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit rem officiis totam earum?
+  </div>
+  <div class="canvas-container">
+    <canvas id="3D-Canvas"></canvas>
+  </div>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

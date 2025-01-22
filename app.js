@@ -2,7 +2,7 @@
 // Scene, Camera, Renderer
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
+camera.position.z = 13;
 
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threeCanvas'), antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -16,19 +16,20 @@ scene.add(light);
 const ambientLight = new THREE.AmbientLight(0x404040); // Soft light
 scene.add(ambientLight);
 
+
+
 // Load 3D Model (Headset)
 const loader = new THREE.GLTFLoader();
 let headset;
 
 loader.load(
-  'W:/Github/3D-Apple-Airpod-Max\Apple_head.glb', // Replace with the path to your 3D model
+  '/Apple_head.glb', // Replace with the path to your 3D model
   (gltf) => {
     headset = gltf.scene;
     scene.add(headset);
   },
   (xhr) => {
     console.log(`Model ${xhr.loaded / xhr.total * 100}% loaded.`);
-    console.log("dev")
   },
   (error) => {
     console.error('An error occurred while loading the model:', error);
@@ -61,3 +62,4 @@ window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 });
+
