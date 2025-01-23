@@ -14,7 +14,7 @@ const scene = new THREE.Scene();
 let bee;
 // let mixer;
 const loader = new GLTFLoader();
-loader.load('/Apple_head.glb',
+loader.load('Apple_head.glb',
     function (gltf) {
         bee = gltf.scene;
         scene.add(bee);

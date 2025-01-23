@@ -1,65 +1,63 @@
+import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
+import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
 
-// Scene, Camera, Renderer
+const camera = new THREE.PerspectiveCamera(
+    10,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+camera.position.z = 5;
+
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 13;
+let Apple_head;
 
-const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threeCanvas'), antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-
-// Add Light
-const light = new THREE.PointLight(0xffffff, 100, 100);
-light.position.set(10, 10, 10);
-scene.add(light);
-
-const ambientLight = new THREE.AmbientLight(0x404040); // Soft light
-scene.add(ambientLight);
-
-
-
-// Load 3D Model (Headset)
-const loader = new THREE.GLTFLoader();
-let headset;
-
+const loader = new GLTFLoader();
 loader.load(
-  '/Apple_head.glb', // Replace with the path to your 3D model
-  (gltf) => {
-    headset = gltf.scene;
-    scene.add(headset);
-  },
-  (xhr) => {
-    console.log(`Model ${xhr.loaded / xhr.total * 100}% loaded.`);
-  },
-  (error) => {
-    console.error('An error occurred while loading the model:', error);
-  }
+    'Apple_head.glb',
+    function (gltf) {
+        bee = gltf.scene;
+        scene.add(bee);
+    },
+    function (xhr) {},
+    function (error) {
+        console.error('Error loading GLTF model', error);
+    }
 );
 
-// Handle Scroll
-let scrollPosition = 0;
-window.addEventListener('scroll', () => {
-  scrollPosition = window.scrollY;
-});
+const renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('container3D').appendChild(renderer.domElement);
 
-// Animation Loop
-function animate() {
-  requestAnimationFrame(animate);
+// Light setup
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
+scene.add(ambientLight);
 
-  if (headset) {
-    headset.rotation.y += 0.01; // Continuous rotation
-    headset.position.y = -scrollPosition * 0.01; // Move up/down with scroll
-    headset.rotation.x = scrollPosition * 0.001; // Rotate with scroll
-  }
+const topLight = new THREE.DirectionalLight(0xffffff, 1);
+topLight.position.set(500, 500, 500);
+scene.add(topLight);
 
-  renderer.render(scene, camera);
-}
-animate();
+// Animation: Rotate the model on the Z-axis
+const reRender3D = () => {
+    requestAnimationFrame(reRender3D);
 
-// Resize Event
+    // If the model is loaded, rotate it on the Z-axis
+    if (bee) {
+        bee.rotation.z += 0.01; // Adjust the speed of rotation here
+        if (bee.rotation.z >= Math.PI) {
+            bee.rotation.z = 0; // Reset after completing 180 degrees (PI radians)
+        }
+    }
+
+    renderer.render(scene, camera);
+};
+reRender3D();
+
+// Adjust the renderer and camera on window resize
 window.addEventListener('resize', () => {
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 });
+
 

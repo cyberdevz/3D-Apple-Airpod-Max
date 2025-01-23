@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <model-viewer src="Apple_head.glb" alt="A 3D model" auto-rotate camera-controls></model-viewer>
   <script type="importmap">
     {
       "imports": {
@@ -19,11 +20,15 @@
     3D Web
   </div>
   <div class="container">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit rem officiis totam earum?
+    This is my 3D Project of importing a 3D model into a web page.
   </div>
   <div class="canvas-container">
     <canvas id="3D-Canvas"></canvas>
   </div>
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js">
+    <a-scene>
+            <a-entity gltf-model="Apple_head.glb" position="5 5 5"></a-entity>
+    </a-scene>
+  </script>
 </body>
 </html>
