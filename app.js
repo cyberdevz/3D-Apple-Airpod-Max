@@ -14,7 +14,7 @@ let Apple_head;
 
 const loader = new GLTFLoader();
 loader.load(
-    'Apple_head.glb',
+    'W:/Github/3D-Apple-Airpod-Max/Apple_head.glb',
     function (gltf) {
         bee = gltf.scene;
         scene.add(bee);
